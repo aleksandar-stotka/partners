@@ -25,13 +25,16 @@ class PartnerService {
         if (this.partnerList === null) {
             await this.getList()
         }
-        let result = this.partnerList?.find(parner => parner.slug === slug)
+        let result = this.partnerList?.find(partner => partner.slug === slug)
         return result as PartnerInterface
     }
 
     async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-        return {} as PartnerInterface
+               
+    
+        return partner as PartnerInterface
     }
+    
 
     public static getInstance() : PartnerService {
         if (!PartnerService.instance) {

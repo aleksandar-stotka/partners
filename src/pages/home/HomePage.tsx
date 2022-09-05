@@ -17,6 +17,7 @@ function HomePage() {
       setPartners(partnerList);
     });
   }, []);
+  const deletePartners = () => {};
   return (
     <div className="bg-black text-white py-10">
       <div className="container m-auto" style={{ padding: "0px 100px" }}>
