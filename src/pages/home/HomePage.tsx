@@ -7,19 +7,18 @@ import { PartnerInterface } from "../../interfaces";
 import PartnerService from "../../services/PartnerService";
 
 const partnerService = PartnerService.getInstance();
-
+//ja zemma istancata
 function HomePage() {
   // make me array with paths to images that are in assets/images-partners/grid/
   const [partners, setPartners] = useState<PartnerInterface[]>([]);
   useEffect(() => {
     partnerService.getList().then((partnerList) => {
-      console.log(partnerList);
       setPartners(partnerList);
     });
   }, []);
-  const deletePartners = () => {};
+
   return (
-    <div className="bg-black text-white py-10">
+    <div className="bg-black h-auto text-white py-10 mt-10">
       <div className="container m-auto" style={{ padding: "0px 100px" }}>
         <h1
           className="text-3xl text-yellow-300"

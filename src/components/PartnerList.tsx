@@ -8,14 +8,14 @@ interface PartnerListParams {
 }
 
 const PartnerList = (params: PartnerListParams) => {
-  const { partners } = params;
+  const { partners } = params; ///DESTRUCTION ON , FIND PARTNERS
 
   return (
     <>
       {partners &&
         partners?.length > 0 &&
         partners.map((partner) => {
-          const { slug, name, image, phone, id } = partner;
+          const { image, id } = partner;
           return (
             <>
               <Link href={`/home/PartnersDetails/${partner.slug}`}>

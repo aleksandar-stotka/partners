@@ -1,5 +1,5 @@
 import { PartnerInterface } from "../interfaces"
-
+///i took data from backend
 interface PartnerListResponse {
     data: PartnerInterface[]
 }
@@ -13,7 +13,7 @@ class PartnerService {
     private static instance: PartnerService
 
     private partnerList: PartnerInterface[] | null = null
-
+  //partnerList like a object PartnerInterface
     async getList(): Promise<PartnerInterface[]> {
         let response = await fetch('/api/partners')
         let responseObject: PartnerListResponse = await response.json()
@@ -31,8 +31,8 @@ class PartnerService {
   
 
     async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-               
-    
+              
+        
         return partner as PartnerInterface
     }
     
