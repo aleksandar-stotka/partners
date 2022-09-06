@@ -28,6 +28,7 @@ class PartnerService {
         let result = this.partnerList?.find(partner => partner.slug === slug)
         return result as PartnerInterface
     }
+  
 
     async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
                
