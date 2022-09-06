@@ -1,34 +1,23 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState,useEffect } from "react";
 import { PartnerInterface } from "../interfaces";
 import { v4 } from "uuid";
+import PartnerService from "../services/PartnerService";
+
+const partnerService = PartnerService.getInstance();
 
 const Form = () => {
   const [partners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
-  >();
+  >([]);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setPartners({
-      id: v4(),
-      email,
-      image,
-      name,
-      phone,
-      slug: v4(),
-    });
-    console.log(name, email, phone, image, v4());
-    fetch("/api/partners", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(partners),
-    });
-  };
+     
+   useEffect(() => {
+     
+   }, []);
 
   return (
     <form
