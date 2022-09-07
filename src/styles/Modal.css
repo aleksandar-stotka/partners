@@ -18,10 +18,10 @@
   z-index: 10;
 }
 .modal-container {
-  background: rgb(17, 169, 169);
+  background: white;
   border-radius: var(--radius);
-  width: 90vw;
-  height: 80vh;
+  width: 30vw;
+  height: 20vh;
   max-width: 50rem;
   text-align: center;
   display: grid;

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import PartnerList from "../../components/PartnerList";
-import Form from "../../components/Form";
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { PartnerInterface } from "../../interfaces";
@@ -29,9 +28,7 @@ function HomePage() {
         {/* make me a grid that is 4 columns wide and 4 rows tall, while the first 2 columns and rows are filled with div form */}
         <div className="inner container">
           <div className="grid grid-cols-4 grid-rows-4 gap-7">
-            <div className="col-span-2 row-span-2">
-              <Form />
-            </div>
+            <div className="col-span-2 row-span-2"></div>
 
             <PartnerList partners={partners} />
           </div>

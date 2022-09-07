@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState,useEffect } from "react";
-import { PartnerInterface } from "../interfaces";
+import { PartnerInterface } from "../../interfaces";
 import { v4 } from "uuid";
-import PartnerService from "../services/PartnerService";
+import PartnerService from "../../services/PartnerService";
 
 const partnerService = PartnerService.getInstance();
 
