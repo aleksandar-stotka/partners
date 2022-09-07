@@ -18,6 +18,7 @@ class PartnerService {
         let response = await fetch('/api/partners')
         let responseObject: PartnerListResponse = await response.json()
         this.partnerList = responseObject.data
+         
         return responseObject.data
     }
 
@@ -25,15 +26,26 @@ class PartnerService {
         if (this.partnerList === null) {
             await this.getList()
         }
+          
         let result = this.partnerList?.find(partner => partner.slug === slug)
+       console.log(this.partnerList)
         return result as PartnerInterface
     }
   
 
     async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-              
+            console.log
+           const newPartner: PartnerInterface = {
+      ...partner,
+      
+    };
+
+            
+       
+       
         
-        return partner as PartnerInterface
+            
+        return  newPartner as PartnerInterface
     }
     
 

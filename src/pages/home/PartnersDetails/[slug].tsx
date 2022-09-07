@@ -2,12 +2,11 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { PartnerInterface } from "../../../interfaces";
 import PartnerService from "../../../services/PartnerService";
-import Form from "../../../components/Form";
-
 const partnerService = PartnerService.getInstance();
 
 const SelectedPartner = () => {
   const router = useRouter();
+  //localhost:3000
   const slug = router.query.slug as string;
 
   const [partner, setPartner] = useState<PartnerInterface | null>(null);
@@ -28,39 +27,23 @@ const SelectedPartner = () => {
   };
 
   return (
-    <div className="flex justify-center  w-full    bg-black ">
+    <div className="flex justify-center  w-full   bg-black ">
       <div className="inner w-4/5 flex justify-center gap-8   ">
         <div className="form-group w-2/5">
-          <img src={partner?.image} />
+          <img src={partner?.image} alt={partner?.image} />
           {showForm && <Form />}
 
           <div className="button-group flex justify-center ">
             {!showForm && (
               <button
-                style={{
-                  background: "black",
-                  border: "1px solid yellow",
-                  borderRadius: "30px",
-                  width: "10rem",
-                  height: "2rem",
-                  textAlign: "center",
-                  color: "white",
-                }}
+                className=" border border-yellow-300 text-white w-40 m-3 rounded-xl	"
                 onClick={() => setShowForm(true)}
               >
                 edit
               </button>
             )}
             <button
-              style={{
-                background: "black",
-                border: "1px solid red",
-                color: "white",
-                borderRadius: "30px",
-                width: "10rem",
-                height: "2rem",
-                textAlign: "center",
-              }}
+              className=" border m-3 border-red-600 text-white w-40 rounded-xl	"
               onClick={openModal}
             >
               delete
@@ -70,14 +53,16 @@ const SelectedPartner = () => {
         <div className="detail-group w-2/5 flex flex-col m-10  	">
           <h2 className="text-yellow-300 text-5xl">{partner?.name}</h2>
           <ul className="flex flex-col">
-            <li className="p-2">
-              <span className=" text-white underline decoration-yellow-300 ">
+            <li className="p-2 text-white underline decoration-yellow-300 ">
+              <span>
                 <a href="reducations@steets.nl ">email:{partner?.email}</a>
               </span>
             </li>
             <li className="p-2">
-              <span className=" text-white underline decoration-yellow-300 ">
-                <a href="+31 2321 1233">tell:{partner?.phone}</a>
+              <span className=" decoration-yellow-300 ">
+                <a className=" text-white underline" href="+31 2321 1233">
+                  tell:{partner?.phone}
+                </a>
               </span>
             </li>
           </ul>
@@ -92,29 +77,13 @@ const SelectedPartner = () => {
             <p>Are you sure you want delete this partner?</p>{" "}
             <div className="button-fields">
               <button
-                style={{
-                  background: "white",
-                  border: "1px solid red",
-                  color: "black",
-                  borderRadius: "30px",
-                  width: "10rem",
-                  height: "2rem",
-                  textAlign: "center",
-                }}
+                className="rounded-r-xl border m-3  border-red-600 text-black w-40 rounded-xl"
                 onClick={openModal}
               >
                 delete
               </button>
               <button
-                style={{
-                  border: "1px solid yellow",
-                  color: "black",
-                  borderRadius: "30px",
-                  width: "10rem",
-                  height: "2rem",
-                  textAlign: "center",
-                  margin: "1em",
-                }}
+                className=" border  border-yellow-300 text-black w-40 rounded-xl	"
                 onClick={closeModal}
               >
                 cancel
