@@ -75,10 +75,7 @@ const SelectedPartner = () => {
           <div className="modal-container">
             <p>Are you sure you want delete this partner?</p>{" "}
             <div className="button-fields">
-              <button
-                className="rounded-r-xl border m-3  border-red-600 text-black w-40 rounded-xl"
-                onClick={openModal}
-              >
+              <button className="rounded-r-xl border m-3  border-red-600 text-black w-40 rounded-xl">
                 delete
               </button>
               <button

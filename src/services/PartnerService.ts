@@ -31,12 +31,30 @@ class PartnerService {
        console.log(this.partnerList)
         return result as PartnerInterface
     }
+    async deleteOne(id: String): Promise<PartnerInterface> {
+        if (this.partnerList === null) {
+            await this.getList()
+        } console.log(this.partnerList)//get
+        
+      
+               let result = this.partnerList?.filter(partner => partner.id !== id)
+        console.log(this.partnerList)
+              
+          
+     
+
+          return result as unknown as PartnerInterface 
+    }
+
+   
   
 
     async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
            if (this.partnerList === null) {
             await this.getList()
         } console.log(this.partnerList)//get
+
+
        
          
         

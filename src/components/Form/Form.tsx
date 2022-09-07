@@ -1,10 +1,12 @@
-import React, { ChangeEvent, FormEvent, useState,useEffect } from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { PartnerInterface } from "../../interfaces";
 import { v4 } from "uuid";
 import PartnerService from "../../services/PartnerService";
 
 const partnerService = PartnerService.getInstance();
-
+interface PartnerListParams {
+  partners: PartnerInterface[];
+}
 const Form = () => {
   const [partners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
@@ -13,20 +15,25 @@ const Form = () => {
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [image, setImage] = useState<string>("");
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-     
-   useEffect(() => {
-     
-   }, []);
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await partnerService.getList().then((partners) => {
+      const newPartner = {
+        ...partners,
+        name: name,
+        image: image,
+        phone: phone,
+        email: email,
+      };
+
+      console.log(newPartner);
+      setPartners(newPartner);
+    });
+  };
+  useEffect(() => {}, []);
 
   return (
-    <form
-      onSubmit={submitHandler}
-      method="POST"
-      action="/api/partners"
-      className="flex flex-col w-full"
-      style={{ padding: "0px 20px" }}
-    >
+    <form onSubmit={submitHandler} style={{ padding: "0px 20px" }}>
       <h2 className="text-xl text-white pt-4 pb-3">Add a partner?</h2>
       <div
         className="flex-row flex py-2"
@@ -47,7 +54,7 @@ const Form = () => {
           }}
         />
       </div>
-
+      <div></div>
       <label htmlFor="email">Email:</label>
       <input
         type="email"
@@ -60,6 +67,7 @@ const Form = () => {
           background: "black",
         }}
       />
+
       <label htmlFor="phone">Phone:</label>
       <input
         type="phone"
