@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { PartnerInterface } from "../../interfaces";
 import PartnerService from "../../services/PartnerService";
+import Form from "../../components/Form/Form";
 
 const partnerService = PartnerService.getInstance();
 //ja zemma istancata
@@ -28,7 +29,9 @@ function HomePage() {
         {/* make me a grid that is 4 columns wide and 4 rows tall, while the first 2 columns and rows are filled with div form */}
         <div className="inner container">
           <div className="grid grid-cols-4 grid-rows-4 gap-7">
-            <div className="col-span-2 row-span-2"></div>
+            <div className="col-span-2 row-span-2">
+              <Form newPartners={partners} />
+            </div>
 
             <PartnerList partners={partners} />
           </div>

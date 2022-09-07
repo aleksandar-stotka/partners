@@ -31,7 +31,6 @@ const SelectedPartner = () => {
       <div className="inner w-4/5 flex justify-center gap-8   ">
         <div className="form-group w-2/5">
           <img src={partner?.image} alt={partner?.image} />
-          {showForm && <Form />}
 
           <div className="button-group flex justify-center ">
             {!showForm && (

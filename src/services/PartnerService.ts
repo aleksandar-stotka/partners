@@ -12,7 +12,7 @@ class PartnerService {
 
     private static instance: PartnerService
 
-    private partnerList: PartnerInterface[] | null = null
+    private partnerList: PartnerInterface[] | null = null //defined partnerList as object
   //partnerList like a object PartnerInterface
     async getList(): Promise<PartnerInterface[]> {
         let response = await fetch('/api/partners')
@@ -25,7 +25,7 @@ class PartnerService {
     async getOne(slug: String) : Promise<PartnerInterface> {
         if (this.partnerList === null) {
             await this.getList()
-        }
+        } console.log(this.partnerList)//get
           
         let result = this.partnerList?.find(partner => partner.slug === slug)
        console.log(this.partnerList)
@@ -34,18 +34,15 @@ class PartnerService {
   
 
     async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-            console.log
-           const newPartner: PartnerInterface = {
-      ...partner,
-      
-    };
-
-            
+           if (this.partnerList === null) {
+            await this.getList()
+        } console.log(this.partnerList)//get
        
-       
+         
         
+      
             
-        return  newPartner as PartnerInterface
+        return partner as PartnerInterface
     }
     
 
