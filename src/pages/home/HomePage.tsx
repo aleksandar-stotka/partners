@@ -30,7 +30,7 @@ function HomePage() {
         <div className="inner container">
           <div className="grid grid-cols-4 grid-rows-4 gap-7">
             <div className="col-span-2 row-span-2">
-              <Form />
+              <Form partners={partners} />
             </div>
 
             <PartnerList partners={partners} />

@@ -7,8 +7,11 @@ const partnerService = PartnerService.getInstance();
 interface PartnerListParams {
   partners: PartnerInterface[];
 }
-const Form = () => {
-  const [partners, setPartners] = useState<
+const Form = (params: PartnerListParams) => {
+  const { partners } = params;
+  console.log(partners);
+
+  const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
   >([]);
   const [name, setName] = useState<string>("");

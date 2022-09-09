@@ -11,12 +11,16 @@ const SelectedPartner = () => {
 
   const [partner, setPartner] = useState<PartnerInterface | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [removeParner, setRemovePartner] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     partnerService.getOne(slug).then((partner) => setPartner(partner));
   }, []);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const removeParners = (slug: string) => {
+    partnerService.deleteOne(slug).then((partner) => setPartner(partner));
+  };
 
   //////
   const openModal = () => {
@@ -75,7 +79,10 @@ const SelectedPartner = () => {
           <div className="modal-container">
             <p>Are you sure you want delete this partner?</p>{" "}
             <div className="button-fields">
-              <button className="rounded-r-xl border m-3  border-red-600 text-black w-40 rounded-xl">
+              <button
+                onClick={() => removeParners(slug)}
+                className="rounded-r-xl border m-3  border-red-600 text-black w-40 rounded-xl"
+              >
                 delete
               </button>
               <button

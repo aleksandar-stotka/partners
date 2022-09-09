@@ -13,6 +13,7 @@ export default function handler(
   res: NextApiResponse<PartnerInterface | ErrorInterface>
 ) {
   const { method, query, body } = req;
+  console.log(body)
 
   const partner = partnersData.find(partner => partner.slug === query.slug);
 
@@ -61,4 +62,5 @@ export default function handler(
       res.status(201).json(JSON.parse(body));
     }
   }
+ 
 }
