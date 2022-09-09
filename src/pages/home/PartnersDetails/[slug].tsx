@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { PartnerInterface } from "../../../interfaces";
 import PartnerService from "../../../services/PartnerService";
+import handler from "../../api/partners/[slug]";
+
 const partnerService = PartnerService.getInstance();
 
 const SelectedPartner = () => {
@@ -80,7 +82,7 @@ const SelectedPartner = () => {
             <p>Are you sure you want delete this partner?</p>{" "}
             <div className="button-fields">
               <button
-                onClick={() => removeParners(slug)}
+                onClick={() => removeParners}
                 className="rounded-r-xl border m-3  border-red-600 text-black w-40 rounded-xl"
               >
                 delete
