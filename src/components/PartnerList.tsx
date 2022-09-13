@@ -7,8 +7,11 @@ interface PartnerListParams {
   partners: PartnerInterface[];
 }
 
-  const PartnerList = (params: PartnerListParams) => {
-    const { partners } = params; ///DESTRUCTION ON , FIND PARTNERS
+const PartnerList = (params: PartnerListParams) => {
+  const { partners } = params;
+  console.log(partners);
+
+  ///DESTRUCTION ON , FIND PARTNERS
 
   return (
     <>
