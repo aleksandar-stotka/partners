@@ -9,7 +9,6 @@ interface PartnerListParams {
 
 const PartnerList = (params: PartnerListParams) => {
   const { partners } = params;
-  console.log(partners);
 
   ///DESTRUCTION ON , FIND PARTNERS
 
@@ -18,12 +17,13 @@ const PartnerList = (params: PartnerListParams) => {
       {partners &&
         partners?.length > 0 &&
         partners.map((partner) => {
-          const { image, id } = partner;
+          const { image, id, name, phone } = partner;
           return (
             <>
               <Link href={`/home/PartnersDetails/${partner.slug}`}>
                 <article key={id}>
                   <img src={image} />
+                  <h1>{name}</h1>
                 </article>
               </Link>
             </>

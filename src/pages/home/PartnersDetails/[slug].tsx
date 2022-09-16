@@ -2,14 +2,14 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { PartnerInterface } from "../../../interfaces";
 import PartnerService from "../../../services/PartnerService";
+import handler from "../../api/partners";
 const partnerService = PartnerService.getInstance();
 const SelectedPartner = () => {
   const router = useRouter();
-
   //localhost:3000
   const slug = router.query.slug as string;
-  const id = router.query.id as string;
-
+  const id = router.query.slug as string;
+  console.log("router id", router.query);
   const [partner, setPartner] = useState<PartnerInterface | null>(null); //there already we have something
   const [showForm, setShowForm] = useState(false);
   const [partners, setRemovePartner] = useState<PartnerInterface | []>([]);
@@ -19,9 +19,13 @@ const SelectedPartner = () => {
     partnerService.getOne(slug).then((partner) => setPartner(partner));
   }, []);
 
-  const deletePartners = (id: string) => {
-    const newPartners: any = partnerService.deleteOne(id);
-    setRemovePartner(newPartners);
+  const deletePartners = async () => {
+    await partnerService
+      .deleteOne(id)
+      .then((partner) => setPartner(partner))
+      .then(() => {
+        router.push("/");
+      });
   };
 
   //////
@@ -79,11 +83,12 @@ const SelectedPartner = () => {
             isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
           }`}
         >
+          +
           <div className="modal-container">
             <p>Are you sure you want delete this partner?</p>{" "}
             <div className="button-fields">
               <button
-                onClick={() => deletePartners(id)}
+                onClick={() => deletePartners()}
                 className="rounded-r-xl border m-3  border-red-600 text-black w-40 rounded-xl"
               >
                 delete

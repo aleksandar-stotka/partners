@@ -1,7 +1,9 @@
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { PartnerInterface } from "../../interfaces";
+
 import { v4 } from "uuid";
 import PartnerService from "../../services/PartnerService";
+// eslint-disable-next-line react-hooks/rules-of-hooks
 
 const partnerService = PartnerService.getInstance();
 interface PartnerListParams {
@@ -13,27 +15,34 @@ const Form = (params: PartnerListParams) => {
 
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
-  >([]);
+  >(partners);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await partnerService.getList().then((partners) => {
-      const newPartner = {
-        ...partners,
-        name: name,
-        image: image,
-        phone: phone,
-        email: email,
-      };
-
-      console.log(newPartner);
-      setPartners(newPartner);
-    });
+    await fetch("/api/partners", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...newPartners,
+        name,
+        email,
+        phone,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
-  useEffect(() => {}, []);
+  useEffect(() => {}, [newPartners]);
 
   return (
     <form onSubmit={submitHandler} style={{ padding: "0px 20px" }}>

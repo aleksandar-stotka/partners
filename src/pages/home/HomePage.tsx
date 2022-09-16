@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable react-hooks/rules-of-hooks */
 import PropTypes from "prop-types";
 import PartnerList from "../../components/PartnerList";
 import React, { useCallback, useEffect } from "react";
@@ -5,12 +7,17 @@ import { useState } from "react";
 import { PartnerInterface } from "../../interfaces";
 import PartnerService from "../../services/PartnerService";
 import Form from "../../components/Form/Form";
-
+import { useRouter } from "next/router";
 const partnerService = PartnerService.getInstance();
+
 //ja zemma istancata
 function HomePage() {
+  const router = useRouter();
+  const id = router.query.id as string;
+
   // make me array with paths to images that are in assets/images-partners/grid/
   const [partners, setPartners] = useState<PartnerInterface[]>([]);
+
   useEffect(() => {
     partnerService.getList().then((partnerList) => {
       setPartners(partnerList);
@@ -40,7 +47,5 @@ function HomePage() {
     </div>
   );
 }
-
-HomePage.propTypes = {};
 
 export default HomePage;

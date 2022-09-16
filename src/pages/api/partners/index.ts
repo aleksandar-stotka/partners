@@ -4,8 +4,10 @@ import { v4 as uuid } from "uuid";
 import * as fs from "fs";
 import { PartnerInterface } from "../../../interfaces/index";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method, body } = req;
 
   if (method === "GET") {
@@ -21,11 +23,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     partnersData.unshift(newPartner);
 
-    fs.writeFile("src/backend-data/data.json", JSON.stringify(partnersData), err => {
-      if (err) console.log(err);
-    });
+    fs.writeFile(
+      "src/backend-data/data.json",
+      JSON.stringify(partnersData),
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
 
     res.status(201).json(newPartner);
   }
-
 }
