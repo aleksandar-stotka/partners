@@ -29,7 +29,7 @@ class PartnerService {
     }
 
     let result = this.partnerList?.find((partner) => partner.slug === slug);
-    console.log(this.partnerList);
+    console.log(this.partnerList, "services");
     return result as PartnerInterface;
   }
   async deleteOne(id: String): Promise<PartnerInterface> {
@@ -40,16 +40,31 @@ class PartnerService {
   }
 
   async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-    const data = { partner };
-    fetch("/api/partners", {
+    const { id, slug, image, phone, name } = partner;
+    console.log(partner, "update");
+    const newPartner = await fetch(`/api/partners/`, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
-    });
+      body: JSON.stringify({
+        ...partner,
+        id: id,
+        slug: slug,
+        image: image,
+        phone: phone,
+        name: name,
+      }),
+    })
+      .then((response) => response.json())
+      .then((newPartner) => {
+        console.log("Success:", newPartner);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
 
-    return data as unknown as PartnerInterface;
+    return newPartner as unknown as PartnerInterface;
   }
 
   public static getInstance(): PartnerService {

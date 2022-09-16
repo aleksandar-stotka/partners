@@ -9,7 +9,6 @@ const SelectedPartner = () => {
   //localhost:3000
   const slug = router.query.slug as string;
   const id = router.query.slug as string;
-  console.log("router id", router.query);
   const [partner, setPartner] = useState<PartnerInterface | null>(null); //there already we have something
   const [showForm, setShowForm] = useState(false);
   const [partners, setRemovePartner] = useState<PartnerInterface | []>([]);

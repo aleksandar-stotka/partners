@@ -13,7 +13,6 @@ const partnerService = PartnerService.getInstance();
 //ja zemma istancata
 function HomePage() {
   const router = useRouter();
-  const id = router.query.id as string;
 
   // make me array with paths to images that are in assets/images-partners/grid/
   const [partners, setPartners] = useState<PartnerInterface[]>([]);

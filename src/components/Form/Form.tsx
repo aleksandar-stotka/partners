@@ -3,15 +3,18 @@ import { PartnerInterface } from "../../interfaces";
 
 import { v4 } from "uuid";
 import PartnerService from "../../services/PartnerService";
-// eslint-disable-next-line react-hooks/rules-of-hooks
+import router, { useRouter } from "next/router";
+import { idText } from "typescript";
 
-const partnerService = PartnerService.getInstance();
+// eslint-disable-next-line react-hooks/rules-of-hooks
 interface PartnerListParams {
   partners: PartnerInterface[];
 }
-const Form = (params: PartnerListParams) => {
-  const { partners } = params;
+const partnerService = PartnerService.getInstance();
+
+const Form = (partners: PartnerInterface) => {
   console.log(partners);
+  const router = useRouter();
 
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
@@ -20,30 +23,28 @@ const Form = (params: PartnerListParams) => {
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [image, setImage] = useState<string>("");
+
+  //////////////////////////////////////////////////////////////////
+
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await fetch("/api/partners", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
+      method: "POST",
       body: JSON.stringify({
-        ...newPartners,
         name,
         email,
         phone,
       }),
+      headers: { "Content-Type": "application/json" },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+      .then((res) => res.json())
+      .then((json) => setPartners(json.newPartners))
+      .then(() => {
+        window.location.reload();
       });
   };
-  useEffect(() => {}, [newPartners]);
-
+  useEffect(() => {}, []);
+  /////////////////////////////////////////////////////////////////////////
   return (
     <form onSubmit={submitHandler} style={{ padding: "0px 20px" }}>
       <h2 className="text-xl text-white pt-4 pb-3">Add a partner?</h2>
@@ -58,6 +59,7 @@ const Form = (params: PartnerListParams) => {
         <input
           type="input"
           onChange={(e) => setName(e.target.value)}
+          value={name}
           id="name"
           className="pl-2"
           style={{
@@ -71,6 +73,7 @@ const Form = (params: PartnerListParams) => {
       <input
         type="email"
         onChange={(e) => setEmail(e.target.value)}
+        value={email}
         id="email"
         style={{
           border: "0",
@@ -84,6 +87,7 @@ const Form = (params: PartnerListParams) => {
       <input
         type="phone"
         onChange={(e) => setPhone(e.target.value)}
+        value={phone}
         id="phone"
         style={{
           border: "0",
