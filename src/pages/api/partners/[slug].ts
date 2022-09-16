@@ -13,9 +13,9 @@ export default function handler(
   res: NextApiResponse<PartnerInterface | ErrorInterface>
 ) {
   const { method, query, body } = req;
-  console.log(body)
+  console.log(body);
 
-  const partner = partnersData.find(partner => partner.slug === query.slug);
+  const partner = partnersData.find((partner) => partner.slug === query.slug);
 
   if (!partner) {
     return res.status(404).json({
@@ -31,7 +31,7 @@ export default function handler(
   if (method === "DELETE") {
     let removedPartner: PartnerInterface | null = null;
 
-    const newPartnersData = partnersData.filter(p => {
+    const newPartnersData = partnersData.filter((p) => {
       if (p.id !== partner.id) {
         return p;
       }
@@ -40,27 +40,34 @@ export default function handler(
       return;
     });
 
-    fs.writeFile("src/backend-data/data.json", JSON.stringify(newPartnersData), err => {
-      if (err) console.log(err);
-    });
+    fs.writeFile(
+      "src/backend-data/data.json",
+      JSON.stringify(newPartnersData),
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
 
     removedPartner && res.status(201).json(removedPartner);
   }
 
   if (method === "PUT") {
-    const editedPartner = partnersData.find(p => p.id === partner.id);
+    const editedPartner = partnersData.find((p) => p.id === partner.id);
 
     if (editedPartner) {
-      const updatedPartnersData = partnersData.map(p =>
+      const updatedPartnersData = partnersData.map((p) =>
         p.id === partner.id ? JSON.parse(body) : p
       );
 
-      fs.writeFile("src/backend-data/data.json", JSON.stringify(updatedPartnersData), err => {
-        if (err) console.log(err);
-      });
+      fs.writeFile(
+        "src/backend-data/data.json",
+        JSON.stringify(updatedPartnersData),
+        (err) => {
+          if (err) console.log(err);
+        }
+      );
 
       res.status(201).json(JSON.parse(body));
     }
   }
- 
 }
