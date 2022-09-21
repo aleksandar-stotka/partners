@@ -22,26 +22,37 @@ const Form = (partners: PartnerInterface) => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<any>(null);
+  console.log(typeof null);
 
   //////////////////////////////////////////////////////////////////
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const selected: File = (target.files as FileList)[0];
+    //...
+    console.log(selected, "image");
+
+    if (!selected) {
+      setImage("please select file");
+      return;
+    }
+    if (!selected.type.includes("image")) {
+      setImage("Selected file must be image");
+      return;
+    }
+    if (selected.size > 100000) {
+      setImage("image file size must be less than 100kn");
+      return;
+    }
+    await setImage(selected);
+    console.log("thumbail update");
+  };
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await fetch("/api/partners", {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        email,
-        phone,
-      }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((json) => setPartners(json.newPartners))
-      .then(() => {
-        window.location.reload();
-      });
+    partnerService
+      .updateOne(partners)
+      .then((partners) => setPartners(partners));
   };
   useEffect(() => {}, []);
   /////////////////////////////////////////////////////////////////////////
@@ -82,6 +93,10 @@ const Form = (partners: PartnerInterface) => {
           background: "black",
         }}
       />
+      <label>
+        <span>profile thumbnail</span>
+        <input required type="file" onChange={handleFileChange} />
+      </label>
 
       <label htmlFor="phone">Phone:</label>
       <input

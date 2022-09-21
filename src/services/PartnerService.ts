@@ -40,31 +40,24 @@ class PartnerService {
   }
 
   async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-    const { id, slug, image, phone, name } = partner;
-    console.log(partner, "update");
-    const newPartner = await fetch(`/api/partners/`, {
+    const data = { partner };
+
+    fetch(`/api/partners`, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        ...partner,
-        id: id,
-        slug: slug,
-        image: image,
-        phone: phone,
-        name: name,
-      }),
+      body: JSON.stringify(partner),
     })
       .then((response) => response.json())
-      .then((newPartner) => {
-        console.log("Success:", newPartner);
+      .then((data) => {
+        console.log("Success:", data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
 
-    return newPartner as unknown as PartnerInterface;
+    return data as unknown as PartnerInterface;
   }
 
   public static getInstance(): PartnerService {
