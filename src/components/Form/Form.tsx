@@ -50,9 +50,7 @@ const Form = (partners: PartnerInterface) => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    partnerService
-      .updateOne(partners)
-      .then((partners) => setPartners(partners));
+    partnerService.updateOne().then((partners) => setPartners(partners));
   };
   useEffect(() => {}, []);
   /////////////////////////////////////////////////////////////////////////
