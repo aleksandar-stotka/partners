@@ -47,8 +47,8 @@ const Form = () => {
         email,
         phone,
       } as PartnerInterface;
-      setPartners(newData);
       await partnerService.updateOne(newData);
+      return setPartners(newData);
     },
     [email, name, phone]
   );

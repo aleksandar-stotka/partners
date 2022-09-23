@@ -44,6 +44,7 @@ class PartnerService {
       headers: {
         "Content-Type": "application/json",
       },
+
       body: JSON.stringify(partner),
     })
       .then((response) => response.json())
