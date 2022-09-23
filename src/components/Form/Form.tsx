@@ -30,11 +30,6 @@ const Form = () => {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ): Promise<any> => {
-    const ImageName = event.target.value.split("\\")[2];
-    const Image = event.target.value;
-    const fileLoaded = URL.createObjectURL(event.target.files[0]);
-    const files = event.target.files;
-    console.log(files, "filses");
     //...
   };
 
