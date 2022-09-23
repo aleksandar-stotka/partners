@@ -3,8 +3,9 @@ import { PartnerInterface } from "../../interfaces";
 
 import { v4 } from "uuid";
 import PartnerService from "../../services/PartnerService";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { idText } from "typescript";
+import partners from "../../pages/api/partners";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 interface PartnerListParams {
@@ -12,48 +13,56 @@ interface PartnerListParams {
 }
 const partnerService = PartnerService.getInstance();
 
-const Form = (partners: PartnerInterface) => {
-  console.log(partners);
+const Form = () => {
   const router = useRouter();
+
+  const slug = router.query.slug as any;
 
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
-  >(partners);
+  >([]);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [image, setImage] = useState<any>(null);
-  console.log(typeof null);
 
   //////////////////////////////////////////////////////////////////
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    const selected: File = (target.files as FileList)[0];
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): Promise<any> => {
+    const ImageName = event.target.value.split("\\")[2];
+    const Image = event.target.value;
+    const fileLoaded = URL.createObjectURL(event.target.files[0]);
+    const files = event.target.files;
+    console.log(files, "filses");
     //...
-    console.log(selected, "image");
-
-    if (!selected) {
-      setImage("please select file");
-      return;
-    }
-    if (!selected.type.includes("image")) {
-      setImage("Selected file must be image");
-      return;
-    }
-    if (selected.size > 100000) {
-      setImage("image file size must be less than 100kn");
-      return;
-    }
-    await setImage(selected);
-    console.log("thumbail update");
   };
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    partnerService.updateOne().then((partners) => setPartners(partners));
+    const data = {
+      name,
+      email,
+      phone,
+      image,
+    };
+
+    const res = fetch("/api/partners", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
   useEffect(() => {}, []);
-  /////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////z///////////////////////////
   return (
     <form onSubmit={submitHandler} style={{ padding: "0px 20px" }}>
       <h2 className="text-xl text-white pt-4 pb-3">Add a partner?</h2>
@@ -91,10 +100,22 @@ const Form = (partners: PartnerInterface) => {
           background: "black",
         }}
       />
-      <label>
-        <span>profile thumbnail</span>
-        <input required type="file" onChange={handleFileChange} />
-      </label>
+      <div>
+        <input
+          type="file"
+          onChange={handleFileChange}
+          accept="image/jpg,.gif,.png,.svg,.webp audio/wav,.mp3"
+        />
+        <img
+          src={image}
+          style={{
+            display: "flex",
+            border: "2px solid tomato",
+            maxWidth: "300px",
+            maxHeight: "300px",
+          }}
+        />
+      </div>
 
       <label htmlFor="phone">Phone:</label>
       <input
@@ -121,6 +142,7 @@ const Form = (partners: PartnerInterface) => {
           background: "black",
         }}
       />
+      <button>Pick file</button>
       <button
         type="submit"
         style={{
