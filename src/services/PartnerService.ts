@@ -1,6 +1,5 @@
 import { PartnerInterface } from "../interfaces";
 import { useRouter } from "next/router";
-import handler from "../pages/api/partners";
 
 ///i took data from backend
 interface PartnerListResponse {
@@ -40,7 +39,7 @@ class PartnerService {
   }
 
   async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-    fetch(`/api/partners/${partner}`, {
+    const newPartnersData = await fetch(`/api/partners`, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +54,7 @@ class PartnerService {
         console.error("Error:", error);
       });
     //return response.json();
-    return partner as PartnerInterface;
+    return newPartnersData as unknown as PartnerInterface;
   }
 
   public static getInstance(): PartnerService {

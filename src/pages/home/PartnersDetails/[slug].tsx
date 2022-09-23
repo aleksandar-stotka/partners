@@ -20,7 +20,7 @@ const SelectedPartner = () => {
 
   const deletePartners = async () => {
     await partnerService
-      .deleteOne(id)
+      .deleteOne(slug)
       .then((partner) => setPartner(partner))
       .then(() => {
         router.push("/");
