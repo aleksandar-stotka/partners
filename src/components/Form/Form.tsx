@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { PartnerInterface } from "../../interfaces";
 
 import { v4 } from "uuid";
@@ -32,30 +38,21 @@ const Form = () => {
   ): Promise<any> => {
     //...
   };
+  const submitHandler = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
-    const data = {
-      name,
-      email,
-      phone,
-      image,
-    };
+      const newData = {
+        name,
+        email,
+        phone,
+      } as PartnerInterface;
+      setPartners(newData);
+      await partnerService.updateOne(newData);
+    },
+    [email, name, phone]
+  );
 
-    const res = fetch("/api/partners", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
   useEffect(() => {}, []);
   //////////////////////////////////////////////z///////////////////////////
   return (
@@ -157,3 +154,6 @@ const Form = () => {
 };
 
 export default Form;
+function async(e: any, arg1: any): any {
+  throw new Error("Function not implemented.");
+}
