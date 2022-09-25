@@ -13,16 +13,14 @@ import { useRouter } from "next/router";
 import { idText } from "typescript";
 import partners from "../../pages/api/partners";
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
+const partnerService = PartnerService.getInstance();
 interface PartnerListParams {
   partners: PartnerInterface[];
 }
-const partnerService = PartnerService.getInstance();
-
-const Form = () => {
+const Form = (params: PartnerListParams) => {
+  const { partners } = params;
+  console.log(partners, "top");
   const router = useRouter();
-
-  const slug = router.query.slug as any;
 
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
@@ -33,23 +31,23 @@ const Form = () => {
   const [image, setImage] = useState<any>(null);
 
   //////////////////////////////////////////////////////////////////
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): Promise<any> => {
+  const handleFileChange = async (): Promise<any> => {
     //...
   };
   const submitHandler = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
       const newData = {
         name,
         email,
         phone,
       } as PartnerInterface;
-      await partnerService.updateOne(newData);
-      return setPartners(newData);
+      await partnerService
+        .updateOne(newData)
+        .then((partner) => setPartners(partner));
+      console.log(newData, "form data");
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [email, name, phone]
   );
 
@@ -154,6 +152,3 @@ const Form = () => {
 };
 
 export default Form;
-function async(e: any, arg1: any): any {
-  throw new Error("Function not implemented.");
-}
