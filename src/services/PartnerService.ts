@@ -39,8 +39,9 @@ class PartnerService {
   }
 
   async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
-    const newPartnersData = await fetch(`/api/partners`, {
-      method: "POST", // or 'PUT'
+    let newPartnersData = await fetch(`/api/partners`, {
+      method: "POST",
+
       headers: {
         "Content-Type": "application/json",
       },

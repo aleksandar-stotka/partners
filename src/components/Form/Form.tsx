@@ -10,8 +10,6 @@ import { PartnerInterface } from "../../interfaces";
 import { v4 } from "uuid";
 import PartnerService from "../../services/PartnerService";
 import { useRouter } from "next/router";
-import { idText } from "typescript";
-import partners from "../../pages/api/partners";
 
 const partnerService = PartnerService.getInstance();
 interface PartnerListParams {
@@ -21,6 +19,8 @@ const Form = (params: PartnerListParams) => {
   const { partners } = params;
   console.log(partners, "top");
   const router = useRouter();
+
+  const slug = router.query.slug;
 
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
@@ -34,24 +34,23 @@ const Form = (params: PartnerListParams) => {
   const handleFileChange = async (): Promise<any> => {
     //...
   };
-  const submitHandler = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const newData = {
-        name,
-        email,
-        phone,
-      } as PartnerInterface;
-      await partnerService
-        .updateOne(newData)
-        .then((partner) => setPartners(partner));
-      console.log(newData, "form data");
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [email, name, phone]
-  );
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const newData = {
+      name,
+      phone,
+      email,
+    } as PartnerInterface;
+    setPartners(newData) as unknown as PartnerInterface;
+    await partnerService.updateOne(newData);
+
+    console.log(newData, "form data");
+  };
   useEffect(() => {}, []);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   //////////////////////////////////////////////z///////////////////////////
   return (
     <form onSubmit={submitHandler} style={{ padding: "0px 20px" }}>
