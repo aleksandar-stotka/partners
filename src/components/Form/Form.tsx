@@ -34,16 +34,16 @@ const Form = (params: PartnerListParams) => {
   const handleFileChange = async (): Promise<any> => {
     //...
   };
-  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newData = {
       name,
       phone,
       email,
-    } as PartnerInterface;
-    setPartners(newData) as unknown as PartnerInterface;
-    await partnerService.updateOne(newData);
+    } as unknown as PartnerInterface;
+    setPartners(newData);
+    partnerService.updateOne(newData);
 
     console.log(newData, "form data");
   };
