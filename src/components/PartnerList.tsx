@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { PartnerInterface } from "../interfaces";
+import Loading from "./Loading";
 
 interface PartnerListParams {
   partners: PartnerInterface[];
@@ -9,9 +10,12 @@ interface PartnerListParams {
 
 const PartnerList = (params: PartnerListParams) => {
   const { partners } = params;
+  const [loading, setLoading] = useState<boolean>(false);
 
   ///DESTRUCTION ON , FIND PARTNERS
-
+  if (loading) {
+    <Loading />;
+  }
   return (
     <>
       {partners &&

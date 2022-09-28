@@ -20,8 +20,6 @@ const Form = (params: PartnerListParams) => {
   console.log(partners, "top");
   const router = useRouter();
 
-  const body = router.query.body as object;
-
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
   >([]);

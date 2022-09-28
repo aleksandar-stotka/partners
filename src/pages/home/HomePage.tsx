@@ -8,6 +8,7 @@ import { PartnerInterface } from "../../interfaces";
 import PartnerService from "../../services/PartnerService";
 import Form from "../../components/Form/Form";
 import { useRouter } from "next/router";
+import Loading from "../../components/Loading";
 const partnerService = PartnerService.getInstance();
 
 //ja zemma istancata
@@ -16,11 +17,14 @@ function HomePage() {
 
   // make me array with paths to images that are in assets/images-partners/grid/
   const [partners, setPartners] = useState<PartnerInterface[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(true);
     partnerService.getList().then((partnerList) => {
       setPartners(partnerList);
     });
+    setLoading(false);
   }, []);
 
   return (
@@ -35,6 +39,7 @@ function HomePage() {
         {/* make me a grid that is 4 columns wide and 4 rows tall, while the first 2 columns and rows are filled with div form */}
         <div className="inner container">
           <div className="grid grid-cols-4 grid-rows-4 gap-7">
+            {!partners && <Loading />}
             <div className="col-span-2 row-span-2">
               <Form partners={partners} />
             </div>
