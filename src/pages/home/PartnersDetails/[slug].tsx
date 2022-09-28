@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
+import Loading from "../../../components/Loading";
 import { PartnerInterface } from "../../../interfaces";
 import PartnerService from "../../../services/PartnerService";
 import handler from "../../api/partners";
@@ -13,9 +14,12 @@ const SelectedPartner = () => {
   const [showForm, setShowForm] = useState(false);
   const [partners, setRemovePartner] = useState<PartnerInterface | []>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     partnerService.getOne(slug).then((partner) => setPartner(partner));
+    setLoading(false);
   }, []);
 
   const deletePartners = async () => {
@@ -26,7 +30,9 @@ const SelectedPartner = () => {
         router.push("/");
       });
   };
-
+  if (loading) {
+    return <Loading />;
+  }
   //////
 
   const openModal = () => {

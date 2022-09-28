@@ -10,6 +10,7 @@ import { PartnerInterface } from "../../interfaces";
 import { v4 } from "uuid";
 import PartnerService from "../../services/PartnerService";
 import { useRouter } from "next/router";
+import Loading from "../Loading";
 
 const partnerService = PartnerService.getInstance();
 interface PartnerListParams {
@@ -27,6 +28,7 @@ const Form = (params: PartnerListParams) => {
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [image, setImage] = useState<any>(null);
+  const [loader, setLoader] = useState(true);
 
   //////////////////////////////////////////////////////////////////
   const handleFileChange = async (): Promise<any> => {
@@ -41,6 +43,7 @@ const Form = (params: PartnerListParams) => {
     } as unknown as PartnerInterface;
 
     await partnerService
+
       .updateOne(newPartner)
       .then((partner) => setPartners(partner))
       .then(() => {
