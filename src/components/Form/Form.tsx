@@ -20,7 +20,7 @@ const Form = (params: PartnerListParams) => {
   console.log(partners, "top");
   const router = useRouter();
 
-  const slug = router.query.slug;
+  const body = router.query.body as object;
 
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
@@ -34,18 +34,20 @@ const Form = (params: PartnerListParams) => {
   const handleFileChange = async (): Promise<any> => {
     //...
   };
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const newData = {
+  const submitHandler = async () => {
+    const newPartner = {
+      ...partners,
       name,
       phone,
       email,
     } as unknown as PartnerInterface;
-    setPartners(newData);
-    partnerService.updateOne(newData);
 
-    console.log(newData, "form data");
+    await partnerService
+      .updateOne(newPartner)
+      .then((partner) => setPartners(partner))
+      .then(() => {
+        router.push("/");
+      });
   };
   useEffect(() => {}, []);
 
