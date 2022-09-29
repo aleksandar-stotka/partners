@@ -20,7 +20,7 @@ const Form = (params: PartnerListParams) => {
   const { partners } = params;
   console.log(partners, "top");
   const router = useRouter();
-
+  //-----------------------------------------------------------------------------
   const [newPartners, setPartners] = useState<
     PartnerInterface | PartnerInterface[]
   >([]);
@@ -29,11 +29,10 @@ const Form = (params: PartnerListParams) => {
   const [phone, setPhone] = useState<string>("");
   const [image, setImage] = useState<any>(null);
   const [loader, setLoader] = useState(true);
+  const [thumbnail, setThumbnail] = useState(null);
 
   //////////////////////////////////////////////////////////////////
-  const handleFileChange = async (): Promise<any> => {
-    //...
-  };
+  const changeHandler = (e: any) => {};
   const submitHandler = async () => {
     const newPartner = {
       ...partners,
@@ -93,20 +92,10 @@ const Form = (params: PartnerListParams) => {
         }}
       />
       <div>
-        <input
-          type="file"
-          onChange={handleFileChange}
-          accept="image/jpg,.gif,.png,.svg,.webp audio/wav,.mp3"
-        />
-        <img
-          src={image}
-          style={{
-            display: "flex",
-            border: "2px solid tomato",
-            maxWidth: "300px",
-            maxHeight: "300px",
-          }}
-        />
+        <label>
+          <span>profile thumbnail</span>
+          <input required type="file" onChange={changeHandler} />
+        </label>
       </div>
 
       <label htmlFor="phone">Phone:</label>
@@ -154,3 +143,6 @@ const Form = (params: PartnerListParams) => {
 };
 
 export default Form;
+function setIsSelected(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
