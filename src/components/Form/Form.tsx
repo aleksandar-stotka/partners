@@ -39,6 +39,7 @@ const Form = (params: PartnerListParams) => {
       name,
       phone,
       email,
+      image
     } as unknown as PartnerInterface;
 
     await partnerService
