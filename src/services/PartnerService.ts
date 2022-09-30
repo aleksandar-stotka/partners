@@ -39,10 +39,13 @@ class PartnerService {
   }
 
   async updateOne(partner: PartnerInterface): Promise<PartnerInterface> {
+    
     // initialize formData object
     const newPartners = {
       ...partner,
+    
     };
+   
     const newPartnersData = await fetch(`/api/partners`, {
       method: "POST",
 
@@ -59,12 +62,13 @@ class PartnerService {
       .catch((error) => {
         console.error("Error:", error);
       });
-    console.log(newPartnersData);
+    console.log(newPartners);
 
     //return response.json();
     return newPartnersData as unknown as PartnerInterface;
   }
 
+  
   public static getInstance(): PartnerService {
     if (!PartnerService.instance) {
       PartnerService.instance = new PartnerService();
