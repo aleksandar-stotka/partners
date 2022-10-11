@@ -33,23 +33,14 @@ const Form = (params: PartnerListParams) => {
 
   //////////////////////////////////////////////////////////////////
   const changeHandler = (e: any) => {};
-  const submitHandler = async () => {
-    const newPartner = {
-      ...partners,
-      name,
-      phone,
-      email,
-      image
-    } as unknown as PartnerInterface;
 
-    await partnerService
+  const submitHandler = async (e: React.FormEvent<HTMLInputElement>) => {
+    
+   
+  }
+     
 
-      .updateOne(newPartner)
-      .then((partner) => setPartners(partner))
-      .then(() => {
-        router.push("/");
-      });
-  };
+    
   useEffect(() => {}, []);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,9 +48,9 @@ const Form = (params: PartnerListParams) => {
   //////////////////////////////////////////////z///////////////////////////
   return (
     <form onSubmit={submitHandler} style={{ padding: "0px 20px" }}>
-      <h2 className="text-xl text-white pt-4 pb-3">Add a partner?</h2>
+      <h2 className="pt-4 pb-3 text-xl text-white">Add a partner?</h2>
       <div
-        className="flex-row flex py-2"
+        className="flex flex-row py-2"
         style={{
           border: "0",
           borderBottom: "2px solid yellow",
